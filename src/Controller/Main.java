@@ -39,6 +39,7 @@ public class Main {
             }
         }
         System.out.println("Filling the playingField:\n" + fieldToString(playingField) + "\n");
+        //logWriter.write("Filling the playingField:\n" + fieldToString(playingField) + "\n");
 
         //assigning random numbers for the field
         for(Position p : playingField){
@@ -47,6 +48,7 @@ public class Main {
             }
         }
         System.out.println("Assigning random numbers to the empty fields:\n" + fieldToString(playingField) + "\n");
+        //logWriter.write("Assigning random numbers to the empty fields:\n" + fieldToString(playingField) + "\n");
 
         int count = 0;
         int randomInt;
@@ -56,14 +58,15 @@ public class Main {
             if (playingField.get(randomInt).isChangeable() &&
                     calcConflicts(playingField, playingField.get(randomInt)) != 0 &&
                     randomInt != lastChanged){
-                System.out.println("Changing random field with conflicts (" + playingField.get(randomInt).toString() + "):\n" + fieldToString(playingField) + "\n");
+                System.out.println("Change " + count + ": Changing random field with conflicts (" + playingField.get(randomInt).toString() + "):\n" + fieldToString(playingField) + "\n");
+                //logWriter.write("Changing random field with conflicts (" + playingField.get(randomInt).toString() + "):\n" + fieldToString(playingField) + "\n");
                 playingField.get(randomInt).setValue(calcMinConflicts(playingField, playingField.get(randomInt)));
                 lastChanged = randomInt;
                 count++;
             }
         }
         System.out.println("Sudoku solved, final solution:\n" + fieldToString(playingField) + "\nTook " + count + " changes.");
-        logWriter.write("Sudoku solved, final solution:\n" + fieldToString(playingField) + "\nTook " + count + " changes.");
+        //logWriter.write("Sudoku solved, final solution:\n" + fieldToString(playingField) + "\nTook " + count + " changes.");
         logWriter.close();
 
     }
