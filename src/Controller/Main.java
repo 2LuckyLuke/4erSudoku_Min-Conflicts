@@ -55,12 +55,14 @@ public class Main {
         int randomInt;
         int lastChanged = 19;
         while (!isSolved(playingField)){
-            count++;
             randomInt = random.nextInt(16);
-            if (playingField.get(randomInt).isChangeable() && calcConflicts(playingField, playingField.get(randomInt)) != 0 && randomInt != lastChanged){
+            if (playingField.get(randomInt).isChangeable() &&
+                    calcConflicts(playingField, playingField.get(randomInt)) != 0 &&
+                    randomInt != lastChanged){
                 System.out.println("Changing random field with conflicts (" + playingField.get(randomInt).toString() + "):\n" + fieldToString(playingField) + "\n");
                 playingField.get(randomInt).setValue(calcMinConflicts(playingField, playingField.get(randomInt)));
                 lastChanged = randomInt;
+                count++;
             }
         }
         System.out.println("Sudoku solved, final solution:\n" + fieldToString(playingField) + "\nTook " + count + " changes.");
@@ -105,19 +107,19 @@ public class Main {
             }
         }
 
-        System.out.println("Conflicts @[" + toCheck.getX() + "|" + toCheck.getY() + "] for value " + toCheck.getValue() + ": " + conflicts);
+        //System.out.println("Conflicts @[" + toCheck.getX() + "|" + toCheck.getY() + "] for value " + toCheck.getValue() + ": " + conflicts);
         return conflicts;
     }
 
     public static int calcMinConflicts(List<Position> playingField, Position toCheck){
         int value = 0;
         int minConflicts = 9;
-        int temp;
+        int tempConflicts;
         for(int i = 1; i < 5; i++){
             if(toCheck.getValue() != i){
-                temp = calcConflicts(playingField, new Position(toCheck.getX(), toCheck.getY(), i, true));
-                if (temp < minConflicts){
-                    minConflicts = temp;
+                tempConflicts = calcConflicts(playingField, new Position(toCheck.getX(), toCheck.getY(), i, true));
+                if (tempConflicts < minConflicts){
+                    minConflicts = tempConflicts;
                     value = i;
                 }
             }
