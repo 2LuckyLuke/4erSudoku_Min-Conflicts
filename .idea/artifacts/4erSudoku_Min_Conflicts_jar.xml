@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="4erSudoku_Min-Conflicts:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/4erSudoku_Min_Conflicts_jar</output-path>
+    <root id="archive" name="4erSudoku_Min-Conflicts.jar">
+      <element id="module-output" name="4erSudoku_Min-Conflicts" />
+    </root>
+  </artifact>
+</component>
