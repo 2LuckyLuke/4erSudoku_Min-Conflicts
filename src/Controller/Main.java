@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Random;
 
 public class Main {
-
-
     public static void main(String[] args) throws IOException {
         List<Position> playingField = new ArrayList<>();
         Random random = new Random();
@@ -21,7 +19,6 @@ public class Main {
         }else {
             System.out.println("File already exists");
         }
-
 
         FileWriter logWriter = new FileWriter("Sudoku_min-conflicts.txt");
 
@@ -71,6 +68,12 @@ public class Main {
 
     }
 
+    /**
+     * Formats the playingField into a 4x4 Matrix.
+     *
+     * @param playingField the playingField; a List of 16 Positions
+     * @return the string
+     */
     public static String fieldToString(List<Position> playingField){
         String result;
         result ="[" + playingField.get(0).getValue() + "|" + playingField.get(4).getValue() + "|" + playingField.get(8).getValue() + "|" + playingField.get(12).getValue() + "]" + "\n"+
@@ -80,6 +83,12 @@ public class Main {
         return result; //this is very bad, no doubt. But it works.
     }
 
+    /**
+     * Checks if the playingField/Sudoku is solved.
+     *
+     * @param playingField the playingField; a List of 16 Positions
+     * @return true if the Sudoku is solved.
+     */
     public static boolean isSolved(List<Position> playingField){
         for(Position p : playingField){
             if (calcConflicts(playingField, p) > 0){
@@ -89,7 +98,13 @@ public class Main {
         return true;
     }
 
-    //constraints:
+    /**
+     * Calculates the amount of Conflicts for a specific Position in playingField.
+     *
+     * @param playingField the playingField; a List of 16 Positions
+     * @param toCheck      the position, to calculate the conflicts for
+     * @return the amount of conflicts for that position as int
+     */
     public static int calcConflicts(List<Position> playingField, Position toCheck){
         int conflicts = 0;
 
@@ -111,6 +126,13 @@ public class Main {
         return conflicts;
     }
 
+    /**
+     * Calculates the Value with the least amount of Conflicts for a specific Position in playingField.
+     *
+     * @param playingField the playingField; a List of 16 Positions
+     * @param toCheck      the position, to calculate the value with the least conflicts for
+     * @return the value with the least conflicts as int
+     */
     public static int calcMinConflicts(List<Position> playingField, Position toCheck){
         int value = 0;
         int minConflicts = 9;
@@ -127,22 +149,38 @@ public class Main {
         return value;
     }
 
-    public static int getQuadrant(Position toCheck){
-        if(toCheck.getX() >= 2 && toCheck.getY() < 2){
+    /**
+     * Get the quadrant of the playingField a Position is in.
+     * The Quadrants are as follows:
+     *  [2|1]
+     *  [3|4]
+     *
+     * @param position the position, to get the quadrant of
+     * @return the quadrant as int
+     */
+    public static int getQuadrant(Position position){
+        if(position.getX() >= 2 && position.getY() < 2){
             return 1;
         }
-        if (toCheck.getX() < 2 && toCheck.getY() < 2) {
+        if (position.getX() < 2 && position.getY() < 2) {
             return 2;
         }
-        if (toCheck.getX() < 2 && toCheck.getY() >= 2) {
+        if (position.getX() < 2 && position.getY() >= 2) {
             return 3;
         }
-        if (toCheck.getX() >= 2 && toCheck.getY() >= 2){
+        if (position.getX() >= 2 && position.getY() >= 2){
             return 4;
         }
         return 999;
     }
 
+    /**
+     * Get all positions from a specified quadrant.
+     *
+     * @param quadrant     the quadrant, to get all Positions from
+     * @param playingField the playingField with all 16 Positions
+     * @return a List<Positions> with all Positions form the specified quadrant
+     */
     public static List<Position> getPositionsFromQuadrant(int quadrant, List<Position> playingField){
         List<Position> quadrantList = new ArrayList<>();
         switch (quadrant) {
